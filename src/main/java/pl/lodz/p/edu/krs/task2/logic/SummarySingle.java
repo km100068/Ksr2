@@ -15,7 +15,7 @@ public class SummarySingle implements Summary {
     private Quantifier q;
 
     public String form1(List<Double> universe) {
-        return q.getName() + " " + subject + " są " + s.getLabelName() + " [" + Degresses.truth(q, s, universe) + "]";
+        return q.getName() + " " + subject + " są " + s.getLabelName() + " [" + Degresses.truth(q, w, s, universe) + "]";
     }
 
     public String form2(List<Double> universe) {
