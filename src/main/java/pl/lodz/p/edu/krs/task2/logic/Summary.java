@@ -4,11 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
-public class Summarizer {
-    private Quantifier quantifier;
-    private Label label;
 
+public interface Summary {
+    String subject = "piosenek";
 }

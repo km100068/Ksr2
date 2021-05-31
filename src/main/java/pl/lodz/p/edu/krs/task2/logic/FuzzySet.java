@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FuzzySet {
-    private List<Double> universe;
     private Function<Double, Double> membershipFunction;
 
     public double getMembership(Double value) {
@@ -23,35 +22,29 @@ public class FuzzySet {
     }
 
     public FuzzySet complete() {
-        return new FuzzySet(new ArrayList<>(universe), (d) -> 1 - membershipFunction.apply(d));
+        return new FuzzySet((d) -> 1 - membershipFunction.apply(d));
     }
 
     public FuzzySet mupliply(FuzzySet f) {
-        List<Double> resSet = f.universe
-                .stream().filter(item -> !f.universe.contains(item))
-                .collect(Collectors.toList());
-
-        return new FuzzySet(resSet, d -> Double.min(membershipFunction.apply(d), f.membershipFunction.apply(d)));
+        return new FuzzySet(d -> Double.min(membershipFunction.apply(d), f.membershipFunction.apply(d)));
     }
 
     public FuzzySet add(FuzzySet f) {
-        List<Double> resSet = new ArrayList<>(universe);
-        resSet.addAll(f.universe);
 
-        return new FuzzySet(resSet, d -> Double.max(membershipFunction.apply(d), f.membershipFunction.apply(d)));
+        return new FuzzySet(d -> Double.max(membershipFunction.apply(d), f.membershipFunction.apply(d)));
     }
 
-    public double height() {
+    public double height(List<Double> universe) {
         Optional<Double> res = universe.stream().map(this::getMembership).max(Double::compare);
 
         return res.orElse(Double.NaN);
     }
 
-    public double cardinality() {
+    public double cardinality(List<Double> universe) {
         return universe.stream().map(this::getMembership).mapToDouble(Double::doubleValue).sum();
     }
 
-    public List<Double> support() {
+    public List<Double> support(List<Double> universe) {
         return universe.stream()
                 .map(item -> new Object[] {item, getMembership(item)})
                 .filter(item -> (double) item[1] > 0)
@@ -59,7 +52,7 @@ public class FuzzySet {
                 .collect(Collectors.toList());
     }
 
-    public List<Double> alphacut(double alpha) {
+    public List<Double> alphacut(List<Double> universe, double alpha) {
         return universe.stream()
                 .map(item -> new Object[] {item, getMembership(item)})
                 .filter(item -> (double) item[1] >= alpha)
@@ -67,7 +60,7 @@ public class FuzzySet {
                 .collect(Collectors.toList());
     }
 
-    public boolean isEmpty() {
+    public boolean isEmpty(List<Double> universe) {
         return universe.stream().map(this::getMembership).mapToDouble(Double::doubleValue).sum() == 0;
     }
 
@@ -76,7 +69,7 @@ public class FuzzySet {
         return false;
     }
 
-    public boolean isNormal() {
-        return height() == 1;
+    public boolean isNormal(List<Double> universe) {
+        return height(universe) == 1;
     }
 }

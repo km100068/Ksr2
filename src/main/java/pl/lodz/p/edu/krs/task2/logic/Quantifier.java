@@ -3,16 +3,15 @@ package pl.lodz.p.edu.krs.task2.logic;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import net.sourceforge.jFuzzyLogic.membership.MembershipFunction;
+
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class Quantifier {
-    private String quantifierName;
-    private FuzzySet fuzzySet;
-    private Label label;
-
-    public double degreeOfTruth() {
-      return fuzzySet.getMembership(label.getFuzzySet().cardinality());
-    };
+public abstract class Quantifier {
+    protected String name;
+    protected MembershipFunction function;
+    protected boolean abs;
 }

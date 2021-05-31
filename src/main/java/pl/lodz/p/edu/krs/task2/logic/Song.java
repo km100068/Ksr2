@@ -10,7 +10,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Song {
     private String id;
-    private double  popularity;
+    private double popularity;
     private double duration_ms;
     private double danceability;
     private double energy;

@@ -7,7 +7,7 @@ import java.util.*;
 
 public class CsvReader
 { public ArrayList<Song> getSongList() throws IOException, CsvException {
-    FileReader fileReader= new FileReader("src/main/java/pl/lodz/p/edu/krs/task2/logic/tracks/tracks.csv");
+    FileReader fileReader= new FileReader("tracks.csv");
 
     CSVReader reader = new CSVReader(fileReader);
 
@@ -15,7 +15,7 @@ public class CsvReader
     List<String[]> xd=  reader.readAll();
     ArrayList<Song> songs= new ArrayList<Song>();
 
-    for(int i=1;i<12000;i++){
+    for(int i=0;i<12000;i++){
 //        System.out.println(new Song(
 //                xd.get(i)[0],xd.get(i)[1],Double.parseDouble(xd.get(i)[2]),Double.parseDouble(xd.get(i)[4]),
 //                xd.get(i)[4],xd.get(i)[5],xd.get(i)[6],xd.get(i)[7],

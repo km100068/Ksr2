@@ -7,7 +7,7 @@ import java.util.List;
 
 public class FuzzySetFactory {
 
-    public FuzzySet createTrapezoidalFuzzySet(double a, double b, double c, double d, List<Double> universe) {
+    public FuzzySet createTrapezoidalFuzzySet(double a, double b, double c, double d) {
         MembershipFunction membershipFunction = new MembershipFunctionTrapetzoidal(
                 new Value(a),
                 new Value(b),
@@ -15,7 +15,7 @@ public class FuzzySetFactory {
                 new Value(d)
         );
 
-        return new FuzzySet(universe, membershipFunction::membership);
+        return new FuzzySet(membershipFunction::membership);
     }
 
     public FuzzySet createTriangularFuzzySet(double a, double b, double c, List<Double> universe) {
@@ -25,23 +25,28 @@ public class FuzzySetFactory {
                 new Value(c)
         );
 
-        return new FuzzySet(universe, membershipFunction::membership);
+        return new FuzzySet(membershipFunction::membership);
     }
 
-    public FuzzySet createGaussianFuzzySet(double mean, double stdev, List<Double> universe) {
+    public FuzzySet createGaussianFuzzySet(double mean, double stdev) {
         MembershipFunction membershipFunction = new MembershipFunctionGaussian(new Value(mean), new Value(stdev));
 
-        return new FuzzySet(universe, membershipFunction::membership);
+        return new FuzzySet(membershipFunction::membership);
     }
 
     public static void main(String[] args) {
-        List<Double> set = new ArrayList<>();
+        Quantifier q = new QuantifierRelative("a", null);
+        System.out.println(q.getClass().getName().substring(30));
 
-        for (int i = 0; i < 100; i++) {
-            set.add((double) i);
-        }
+        System.out.println((QuantifierRelative) q);
 
-        FuzzySet f = new FuzzySetFactory().createTrapezoidalFuzzySet(0, 5, 10, 50, set);
-
+//        List<Double> set = new ArrayList<>();
+//
+//        for (int i = 0; i < 100; i++) {
+//            set.add((double) i);
+//        }
+//
+//        FuzzySet f = new FuzzySetFactory().createTrapezoidalFuzzySet(0, 5, 10, 50, set);
+//
     }
 }
