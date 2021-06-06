@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.lodz.p.edu.krs.task2.model.Song;
 
 import java.util.*;
 import java.util.function.Function;
@@ -15,10 +16,10 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FuzzySet {
-    private Function<Double, Double> membershipFunction;
+    private Function<Song, Double> membershipFunction;
 
-    public double getMembership(Double value) {
-        return membershipFunction.apply(value);
+    public double getMembership(Song song) {
+        return membershipFunction.apply(song);
     }
 
     public FuzzySet complete() {
@@ -30,29 +31,28 @@ public class FuzzySet {
     }
 
     public FuzzySet add(FuzzySet f) {
-
         return new FuzzySet(d -> Double.max(membershipFunction.apply(d), f.membershipFunction.apply(d)));
     }
 
-    public double height(List<Double> universe) {
+    public double height(List<Song> universe) {
         Optional<Double> res = universe.stream().map(this::getMembership).max(Double::compare);
 
         return res.orElse(Double.NaN);
     }
 
-    public double cardinality(List<Double> universe) {
+    public double cardinality(List<Song> universe) {
         return universe.stream().map(this::getMembership).mapToDouble(Double::doubleValue).sum();
     }
 
-    public List<Double> support(List<Double> universe) {
+    public List<Double> support(List<Song> universe) {
         return universe.stream()
                 .map(item -> new Object[] {item, getMembership(item)})
                 .filter(item -> (double) item[1] > 0)
-                .map(item -> (Double) item[0])
+                .map(item -> (Double) item[1])
                 .collect(Collectors.toList());
     }
 
-    public List<Double> alphacut(List<Double> universe, double alpha) {
+    public List<Double> alphacut(List<Song> universe, double alpha) {
         return universe.stream()
                 .map(item -> new Object[] {item, getMembership(item)})
                 .filter(item -> (double) item[1] >= alpha)
@@ -60,7 +60,7 @@ public class FuzzySet {
                 .collect(Collectors.toList());
     }
 
-    public boolean isEmpty(List<Double> universe) {
+    public boolean isEmpty(List<Song> universe) {
         return universe.stream().map(this::getMembership).mapToDouble(Double::doubleValue).sum() == 0;
     }
 
@@ -69,7 +69,7 @@ public class FuzzySet {
         return false;
     }
 
-    public boolean isNormal(List<Double> universe) {
+    public boolean isNormal(List<Song> universe) {
         return height(universe) == 1;
     }
 }

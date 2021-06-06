@@ -2,31 +2,16 @@ package pl.lodz.p.edu.krs.task2;
 
 import com.opencsv.exceptions.CsvException;
 import pl.lodz.p.edu.krs.task2.logic.*;
+import pl.lodz.p.edu.krs.task2.model.CsvReader;
+import pl.lodz.p.edu.krs.task2.model.Song;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws IOException, CsvException {
         List<Song> songs = CsvReader.getSongList();
-        List<Double> popularity = songs.stream().map(Song::getPopularity).collect(Collectors.toList());
-        List<Double> duration_ms = songs.stream().map(Song::getDuration_ms).collect(Collectors.toList());
-        List<Double> danceability = songs.stream().map(Song::getDanceability).collect(Collectors.toList());
-
-        for (Song song: songs) {
-            System.out.println(song.getDanceability());
-        }
-        System.out.println();
-
-        List<Double> energy = songs.stream().map(Song::getEnergy).collect(Collectors.toList());
-        List<Double> loudness = songs.stream().map(Song::getLoudness).collect(Collectors.toList());
-        List<Double> speechiness = songs.stream().map(Song::getSpeechiness).collect(Collectors.toList());
-        List<Double> acousticness = songs.stream().map(Song::getAcousticness).collect(Collectors.toList());
-        List<Double> instrumentalness = songs.stream().map(Song::getInstrumentalness).collect(Collectors.toList());
-        List<Double> liveness = songs.stream().map(Song::getLiveness).collect(Collectors.toList());
-        List<Double> tempo = songs.stream().map(Song::getTempo).collect(Collectors.toList());
 
         List<QuantifierAbsolute> absoluteQuantifiers = new ArrayList<>();
         List<QuantifierRelative> relativeQuantifiers = new ArrayList<>();
@@ -47,50 +32,50 @@ public class Main {
         FuzzySetFactory ff = new FuzzySetFactory();
 
 
-        popularityLabels.add(new Label("popularność", "mało popularne", ff.createTrapezoidalFuzzySet(0, 0.15, 0.27, 0.35)));
-        popularityLabels.add(new Label("popularity", "średnio popularne", ff.createTrapezoidalFuzzySet(0.33, 0.46, 0.58, 0.66)));
-        popularityLabels.add(new Label("popularity", "popularne", ff.createTrapezoidalFuzzySet(0.65, 0.79, 0.88, 1)));
+        popularityLabels.add(new Label("popularność", "mało popularne", ff.createTrapezoidalFuzzySet(0, 0.15, 0.27, 0.35, Song::getPopularity)));
+        popularityLabels.add(new Label("popularity", "średnio popularne", ff.createTrapezoidalFuzzySet(0.33, 0.46, 0.58, 0.66, Song::getPopularity)));
+        popularityLabels.add(new Label("popularity", "popularne", ff.createTrapezoidalFuzzySet(0.65, 0.79, 0.88, 1, Song::getPopularity)));
 
-        duration_msLables.add(new Label("trwałość", "bardzo któtkie", ff.createTrapezoidalFuzzySet(3400, 6000, 8000, 10000)));
-        duration_msLables.add(new Label("trwałość", "któtkie", ff.createTrapezoidalFuzzySet(9900, 13000, 16000, 20000)));
-        duration_msLables.add(new Label("trwałość", "przeciętne", ff.createTrapezoidalFuzzySet(19000, 25000, 37000, 50000)));
-        duration_msLables.add(new Label("trwałość", "długie", ff.createTrapezoidalFuzzySet(49000, 120000, 200000, 400000)));
-        duration_msLables.add(new Label("trwałość", "bardzo długie", ff.createTrapezoidalFuzzySet(399000, 1200000, 3000000, 5700000)));
+        duration_msLables.add(new Label("trwałość", "bardzo któtkie", ff.createTrapezoidalFuzzySet(3400, 6000, 8000, 10000, Song::getDuration_ms)));
+        duration_msLables.add(new Label("trwałość", "któtkie", ff.createTrapezoidalFuzzySet(9900, 13000, 16000, 20000, Song::getDuration_ms)));
+        duration_msLables.add(new Label("trwałość", "przeciętne", ff.createTrapezoidalFuzzySet(19000, 25000, 37000, 50000, Song::getDuration_ms)));
+        duration_msLables.add(new Label("trwałość", "długie", ff.createTrapezoidalFuzzySet(49000, 120000, 200000, 400000, Song::getDuration_ms)));
+        duration_msLables.add(new Label("trwałość", "bardzo długie", ff.createTrapezoidalFuzzySet(399000, 1200000, 3000000, 5700000, Song::getDuration_ms)));
 
-        danceabilityLables.add(new Label("taneczność", "mało taneczne", ff.createTrapezoidalFuzzySet(0, 0.10, 0.18, 0.30)));
-        danceabilityLables.add(new Label("taneczność", "średnio taneczne", ff.createTrapezoidalFuzzySet(0.29, 0.34, 0.44, 0.60)));
-        danceabilityLables.add(new Label("taneczność", "bardzo taneczne", ff.createTrapezoidalFuzzySet(0.59, 0.65, 0.80, 1)));
+        danceabilityLables.add(new Label("taneczność", "mało taneczne", ff.createTrapezoidalFuzzySet(0, 0.10, 0.18, 0.30, Song::getDanceability)));
+        danceabilityLables.add(new Label("taneczność", "średnio taneczne", ff.createTrapezoidalFuzzySet(0.29, 0.34, 0.44, 0.60, Song::getDanceability)));
+        danceabilityLables.add(new Label("taneczność", "bardzo taneczne", ff.createTrapezoidalFuzzySet(0.59, 0.65, 0.80, 1, Song::getDanceability)));
 
-        energyLables.add(new Label("energiczność","mało energiczne",ff.createTrapezoidalFuzzySet(0.13, 0.15, 0.19, 0.35)));
-        energyLables.add(new Label("energiczność","średnio energiczne",ff.createTrapezoidalFuzzySet(0.33, 0.46, 0.58, 0.66)));
-        energyLables.add(new Label("energiczność","mało energiczne",ff.createTrapezoidalFuzzySet(0.65, 0.79, 0.88, 0.98)));
+        energyLables.add(new Label("energiczność","mało energiczne",ff.createTrapezoidalFuzzySet(0.13, 0.15, 0.19, 0.35, Song::getEnergy)));
+        energyLables.add(new Label("energiczność","średnio energiczne",ff.createTrapezoidalFuzzySet(0.33, 0.46, 0.58, 0.66, Song::getEnergy)));
+        energyLables.add(new Label("energiczność","mało energiczne",ff.createTrapezoidalFuzzySet(0.65, 0.79, 0.88, 0.98, Song::getEnergy)));
 
-        loudnessLables.add(new Label("głośność","ciche",ff.createTrapezoidalFuzzySet(0, 0.05, 0.10, 0.15)));
-        loudnessLables.add(new Label("głośność","przeciętnie głośne",ff.createTrapezoidalFuzzySet(0.14, 0.18, 0.22, 0.26)));
-        loudnessLables.add(new Label("głośność","głośne",ff.createTrapezoidalFuzzySet(0.25, 0.31, 0.37, 0.43)));
-        loudnessLables.add(new Label("głośność","bardzo głośne",ff.createTrapezoidalFuzzySet(0.42, 0.49, 0.55, 0.60)));
+        loudnessLables.add(new Label("głośność","ciche",ff.createTrapezoidalFuzzySet(0, 0.05, 0.10, 0.15, Song::getLoudness)));
+        loudnessLables.add(new Label("głośność","przeciętnie głośne",ff.createTrapezoidalFuzzySet(0.14, 0.18, 0.22, 0.26, Song::getLoudness)));
+        loudnessLables.add(new Label("głośność","głośne",ff.createTrapezoidalFuzzySet(0.25, 0.31, 0.37, 0.43, Song::getLoudness)));
+        loudnessLables.add(new Label("głośność","bardzo głośne",ff.createTrapezoidalFuzzySet(0.42, 0.49, 0.55, 0.60, Song::getLoudness)));
 
-        speechinessLables.add(new Label("wokalność","mało wokalne",ff.createTrapezoidalFuzzySet(0, 0.15, 0.27, 0.37)));
-        speechinessLables.add(new Label("wokalność","średnio wokalne",ff.createTrapezoidalFuzzySet(0.36, 0.46, 0.58, 0.66)));
-        speechinessLables.add(new Label("wokalność","bardzo wokalne",ff.createTrapezoidalFuzzySet(0.65, 0.79, 0.88, 1)));
+        speechinessLables.add(new Label("wokalność","mało wokalne",ff.createTrapezoidalFuzzySet(0, 0.15, 0.27, 0.37, Song::getSpeechiness)));
+        speechinessLables.add(new Label("wokalność","średnio wokalne",ff.createTrapezoidalFuzzySet(0.36, 0.46, 0.58, 0.66, Song::getSpeechiness)));
+        speechinessLables.add(new Label("wokalność","bardzo wokalne",ff.createTrapezoidalFuzzySet(0.65, 0.79, 0.88, 1, Song::getSpeechiness)));
 
-        acousticnessLables.add(new Label("akustyczność","mało akustyczne",ff.createTrapezoidalFuzzySet(0.12, 0.25, 0.29, 0.35)));
-        acousticnessLables.add(new Label("akustyczność","średnio akustyczne",ff.createTrapezoidalFuzzySet(0.33, 0.46, 0.58, 0.69)));
-        acousticnessLables.add(new Label("akustyczność","bardzo akustyczne",ff.createTrapezoidalFuzzySet(0.65, 0.79, 0.88, 1)));
+        acousticnessLables.add(new Label("akustyczność","mało akustyczne",ff.createTrapezoidalFuzzySet(0.12, 0.25, 0.29, 0.35, Song::getAcousticness)));
+        acousticnessLables.add(new Label("akustyczność","średnio akustyczne",ff.createTrapezoidalFuzzySet(0.33, 0.46, 0.58, 0.69, Song::getAcousticness)));
+        acousticnessLables.add(new Label("akustyczność","bardzo akustyczne",ff.createTrapezoidalFuzzySet(0.65, 0.79, 0.88, 1, Song::getAcousticness)));
 
-        instrumentalnessLables.add(new Label("instrumentalność","mało instrumentalne",ff.createTrapezoidalFuzzySet(0.14, 0.21, 0.27, 0.35)));
-        instrumentalnessLables.add(new Label("instrumentalność","średnio instrumentalne",ff.createTrapezoidalFuzzySet(0.33, 0.46, 0.58, 0.69)));
-        instrumentalnessLables.add(new Label("instrumentalność","bardzo instrumentalne",ff.createTrapezoidalFuzzySet(0.67, 0.79, 0.88, 0.98)));
+        instrumentalnessLables.add(new Label("instrumentalność","mało instrumentalne",ff.createTrapezoidalFuzzySet(0.14, 0.21, 0.27, 0.35, Song::getInstrumentalness)));
+        instrumentalnessLables.add(new Label("instrumentalność","średnio instrumentalne",ff.createTrapezoidalFuzzySet(0.33, 0.46, 0.58, 0.69, Song::getInstrumentalness)));
+        instrumentalnessLables.add(new Label("instrumentalność","bardzo instrumentalne",ff.createTrapezoidalFuzzySet(0.67, 0.79, 0.88, 0.98, Song::getInstrumentalness)));
 
-        livenessLables.add(new Label("nastrój","smutne",ff.createTrapezoidalFuzzySet(0.16, 0.21, 0.29, 0.35)));
-        livenessLables.add(new Label("nastrój","pogodne",ff.createTrapezoidalFuzzySet(0.34, 0.46, 0.58, 0.72)));
-        livenessLables.add(new Label("nastrój","wesole",ff.createTrapezoidalFuzzySet(0.71, 0.79, 0.88, 0.99)));
+        livenessLables.add(new Label("nastrój","smutne",ff.createTrapezoidalFuzzySet(0.16, 0.21, 0.29, 0.35, Song::getLiveness)));
+        livenessLables.add(new Label("nastrój","pogodne",ff.createTrapezoidalFuzzySet(0.34, 0.46, 0.58, 0.72, Song::getLiveness)));
+        livenessLables.add(new Label("nastrój","wesole",ff.createTrapezoidalFuzzySet(0.71, 0.79, 0.88, 0.99, Song::getLiveness)));
 
 
-        tempoLables.add(new Label("tempo","słabe",ff.createTrapezoidalFuzzySet(0, 37, 43, 47)));
-        tempoLables.add(new Label("tempo","średnie",ff.createTrapezoidalFuzzySet(46, 53, 80, 99)));
-        tempoLables.add(new Label("tempo","szybkie",ff.createTrapezoidalFuzzySet(98, 120, 140, 170)));
-        tempoLables.add(new Label("tempo","bardzo szybkie",ff.createTrapezoidalFuzzySet(169, 200, 230, 270)));
+        tempoLables.add(new Label("tempo","słabe",ff.createTrapezoidalFuzzySet(0, 37, 43, 47, Song::getTempo)));
+        tempoLables.add(new Label("tempo","średnie",ff.createTrapezoidalFuzzySet(46, 53, 80, 99, Song::getTempo)));
+        tempoLables.add(new Label("tempo","szybkie",ff.createTrapezoidalFuzzySet(98, 120, 140, 170, Song::getTempo)));
+        tempoLables.add(new Label("tempo","bardzo szybkie",ff.createTrapezoidalFuzzySet(169, 200, 230, 270, Song::getTempo)));
 
 
         absoluteQuantifiers.add(qf.createAbsoluteQuantifierTrapezoidal("Mniej niż 500",0,0,99,499));
@@ -108,18 +93,10 @@ public class Main {
         relativeQuantifiers.add(qf.createRelativeQuantifierTrapezoidal("Prawie całość",0.85,0.9,1,1.05));
 
 
-        List<SummarySingle> summaries = new ArrayList<>();
-
-        for (QuantifierRelative quantifier: relativeQuantifiers) {
-            for (Label label: danceabilityLables) {
-                summaries.add(new SummarySingle(label, null, quantifier));
-            }
-        }
-
-
-
-        for (SummarySingle summary: summaries) {
-            System.out.println(summary.form1(danceability));
-        }
+//        for (QuantifierRelative quantifier: relativeQuantifiers) {
+//            for (Label label: danceabilityLables) {
+//                System.out.println(SummarySingle.form1(songs, quantifier, label));
+//            }
+//        }
     }
 }

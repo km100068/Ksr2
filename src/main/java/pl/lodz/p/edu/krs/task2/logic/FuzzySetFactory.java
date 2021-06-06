@@ -1,13 +1,13 @@
 package pl.lodz.p.edu.krs.task2.logic;
 
 import net.sourceforge.jFuzzyLogic.membership.*;
+import pl.lodz.p.edu.krs.task2.model.Song;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.function.Function;
 
 public class FuzzySetFactory {
 
-    public FuzzySet createTrapezoidalFuzzySet(double a, double b, double c, double d) {
+    public FuzzySet createTrapezoidalFuzzySet(double a, double b, double c, double d, Function<Song, Double> extractor) {
         MembershipFunction membershipFunction = new MembershipFunctionTrapetzoidal(
                 new Value(a),
                 new Value(b),
@@ -15,23 +15,23 @@ public class FuzzySetFactory {
                 new Value(d)
         );
 
-        return new FuzzySet(membershipFunction::membership);
+        return new FuzzySet(song -> membershipFunction.membership(extractor.apply(song)));
     }
 
-    public FuzzySet createTriangularFuzzySet(double a, double b, double c, List<Double> universe) {
+    public FuzzySet createTriangularFuzzySet(double a, double b, double c, Function<Song, Double> extractor) {
         MembershipFunction membershipFunction = new MembershipFunctionTriangular(
                 new Value(a),
                 new Value(b),
                 new Value(c)
         );
 
-        return new FuzzySet(membershipFunction::membership);
+        return new FuzzySet(song -> membershipFunction.membership(extractor.apply(song)));
     }
 
-    public FuzzySet createGaussianFuzzySet(double mean, double stdev) {
+    public FuzzySet createGaussianFuzzySet(double mean, double stdev, Function<Song, Double> extractor) {
         MembershipFunction membershipFunction = new MembershipFunctionGaussian(new Value(mean), new Value(stdev));
 
-        return new FuzzySet(membershipFunction::membership);
+        return new FuzzySet(song -> membershipFunction.membership(extractor.apply(song)));
     }
 
     public static void main(String[] args) {

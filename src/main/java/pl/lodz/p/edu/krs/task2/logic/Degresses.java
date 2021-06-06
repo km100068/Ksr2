@@ -1,23 +1,18 @@
 package pl.lodz.p.edu.krs.task2.logic;
 
+import pl.lodz.p.edu.krs.task2.model.Song;
+
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Degresses {
-    public static double truth(Quantifier q, Label w, Label s, List<Double> universe) {
+    public static double T1(Quantifier q, Label w, Label s, List<Song> universe) {
         if (w != null) {
-            return q.getFunction().membership(
-                    universe
-                            .stream()
-                            .mapToDouble(value -> Math.min(s.getMembership(value), w.getMembership(value)))
-                            .sum() / universe.stream().mapToDouble(w::getMembership).sum());
+//            return
         }
 
-        double sum = universe.stream().mapToDouble(s::getMembership).sum() /
-                (q.isAbs() ? 1 : universe.size());
+        double sum = universe.stream().mapToDouble(s::getMembership).sum();
 
-        System.out.println("SUM: " + sum);
-
-        return q.getFunction().membership(sum);
+        return q.getFunction().membership(sum /
+                (q.isAbs() ? 1 : (universe.size())));
     }
 }

@@ -15,6 +15,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
+          <factory-entry name="entityManagerFactory" />
           <factory-entry name="task2" />
         </datasource-mapping>
         <naming-strategy-map />
@@ -37,6 +38,19 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jFuzzyLogic" level="project" />
+    <orderEntry type="library" name="opencsv-5.4" level="project" />
+    <orderEntry type="library" name="commons-lang3-3.12.0" level="project" />
+    <orderEntry type="library" name="javafx-swt" level="project" />
+    <orderEntry type="library" name="javafx.controls" level="project" />
+    <orderEntry type="library" name="javafx.base" level="project" />
+    <orderEntry type="library" name="openjfx-11.0.2_windows-x64_bin-sdk" level="project" />
+    <orderEntry type="library" name="gson-2.8.7" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:16-ea+7" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:16-ea+7" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:16-ea+7" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:16-ea+7" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:16-ea+7" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:16-ea+7" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:4.1.4.Final" level="project" />
     <orderEntry type="library" name="Maven: antlr:antlr:2.7.7" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.4.1.Final" level="project" />
@@ -124,7 +138,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-jcl:5.3.7" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:5.3.7" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.xmlunit:xmlunit-core:2.8.2" level="project" />
-    <orderEntry type="library" name="opencsv-5.4" level="project" />
-    <orderEntry type="library" name="commons-lang3-3.12.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.7" level="project" />
   </component>
 </module>
