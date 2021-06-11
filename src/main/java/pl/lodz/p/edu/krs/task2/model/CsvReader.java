@@ -17,7 +17,7 @@ public class CsvReader {
     List<String[]> xd=  reader.readAll();
     ArrayList<Song> songs= new ArrayList<Song>();
 
-    for(int i=1;i<12000;i++){
+    for(int i=1;i<12001;i++){
 //        System.out.println(new Song(
 //                xd.get(i)[0],xd.get(i)[1],Double.parseDouble(xd.get(i)[2]),Double.parseDouble(xd.get(i)[4]),
 //                xd.get(i)[4],xd.get(i)[5],xd.get(i)[6],xd.get(i)[7],
@@ -37,9 +37,9 @@ public class CsvReader {
     public static void main(String[] args) throws IOException, CsvException {
         List<Song> songs = getSongList();
 
-        System.out.println("size: " + songs.size());
-        for (Song song: songs) {
-            System.out.println(song);
+        //System.out.println("size: " + songs.size());
+        //for (Song song: songs) {
+       //     System.out.println(song);
         }
     }
 }
