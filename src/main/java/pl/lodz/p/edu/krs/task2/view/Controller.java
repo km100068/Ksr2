@@ -294,50 +294,50 @@ public class Controller implements Initializable {
         relativeQuantifiers.clear();
         multiple.getLabels().clear();
 
-        popularity.addLabel("mało popularne", 0, 15, 27, 35, Song::getPopularity);
-        popularity.addLabel("średnio popularne", 33, 46, 58, 66, Song::getPopularity);
-        popularity.addLabel("popularne", 65, 79, 88, 101, Song::getPopularity);
+        popularity.addLabel("mało popularne", 0, 7, 15, 21, Song::getPopularity);
+        popularity.addLabel("średnio popularne", 20, 30, 43, 51, Song::getPopularity);
+        popularity.addLabel("popularne", 50, 55, 60, 65, Song::getPopularity);
 
         duration.addLabel("bardzo któtkie", 3400, 6000, 8000, 10000, Song::getDuration_ms);
         duration.addLabel("któtkie", 9900, 13000, 16000, 20000, Song::getDuration_ms);
         duration.addLabel("przeciętne", 19000, 25000, 37000, 50000, Song::getDuration_ms);
-        duration.addLabel("długie", 49000, 120000, 200000, 400000, Song::getDuration_ms);
-        duration.addLabel("bardzo długie", 399000, 1200000, 3000000, 5700000, Song::getDuration_ms);
+        duration.addLabel("długie", 49000, 120000, 200000, 41000, Song::getDuration_ms);
+        duration.addLabel("bardzo długie", 40000, 2200000, 2700000, 3010000, Song::getDuration_ms);
 
-        danceability.addLabel("mało taneczne", 0, 0.10, 0.18, 0.30, Song::getDanceability);
-        danceability.addLabel("średnio taneczne", 0.29, 0.34, 0.44, 0.60, Song::getDanceability);
-        danceability.addLabel("bardzo taneczne", 0.59, 0.65, 0.80, 1, Song::getDanceability);
+        danceability.addLabel("mało taneczne", 0, 10, 18, 30, Song::getDanceability);
+        danceability.addLabel("średnio taneczne", 29, 0.34, 0.44, 62, Song::getDanceability);
+        danceability.addLabel("bardzo taneczne", 60, 70, 80, 96, Song::getDanceability);
 
         energy.addLabel("mało energiczne",0.13, 0.15, 0.19, 0.35, Song::getEnergy);
         energy.addLabel("średnio energiczne",0.33, 0.46, 0.58, 0.66, Song::getEnergy);
         energy.addLabel("bardzo energiczne",0.65, 0.79, 0.88, 1, Song::getEnergy);
 
-        loudness.addLabel("ciche",0, 0.05, 0.10, 0.15, Song::getLoudness);
-        loudness.addLabel("przeciętnie głośne",0.14, 0.18, 0.22, 0.26, Song::getLoudness);
-        loudness.addLabel("głośne",0.25, 0.31, 0.37, 0.43, Song::getLoudness);
-        loudness.addLabel("bardzo głośne",0.42, 0.49, 0.55, 0.60, Song::getLoudness);
+        loudness.addLabel("ciche",0, 5, 10, 15, Song::getLoudness);
+        loudness.addLabel("przeciętnie głośne",14, 18, 22, 26, Song::getLoudness);
+        loudness.addLabel("głośne",25, 31, 37, 43, Song::getLoudness);
+        loudness.addLabel("bardzo głośne",42, 49, 55, 64, Song::getLoudness);
 
-        speechiness.addLabel("mało wokalne",0, 0.15, 0.27, 0.37, Song::getSpeechiness);
-        speechiness.addLabel("średnio wokalne",0.36, 0.46, 0.58, 0.66, Song::getSpeechiness);
-        speechiness.addLabel("bardzo wokalne",0.65, 0.79, 0.88, 1, Song::getSpeechiness);
+        speechiness.addLabel("mało wokalne",0, 15, 27, 37, Song::getSpeechiness);
+        speechiness.addLabel("średnio wokalne",36, 46, 58, 66, Song::getSpeechiness);
+        speechiness.addLabel("bardzo wokalne",65, 79, 88, 97, Song::getSpeechiness);
 
         acousticness.addLabel("mało akustyczne",0.12, 0.25, 0.29, 0.35, Song::getAcousticness);
         acousticness.addLabel("średnio akustyczne",0.33, 0.46, 0.58, 0.69, Song::getAcousticness);
         acousticness.addLabel("bardzo akustyczne",0.65, 0.79, 0.88, 1, Song::getAcousticness);
 
-        instrumentalness.addLabel("mało instrumentalne", 0.14, 0.21, 0.27, 0.35, Song::getInstrumentalness);
-        instrumentalness.addLabel("średnio instrumentalne", 0.33, 0.46, 0.58, 0.69, Song::getInstrumentalness);
-        instrumentalness.addLabel("bardzo instrumentalne", 0.67, 0.79, 0.88, 0.98, Song::getInstrumentalness);
+        instrumentalness.addLabel("mało instrumentalne", 14, 21, 27, 35, Song::getInstrumentalness);
+        instrumentalness.addLabel("średnio instrumentalne", 33, 46, 58, 69, Song::getInstrumentalness);
+        instrumentalness.addLabel("bardzo instrumentalne", 67, 79, 88, 98, Song::getInstrumentalness);
 
-        liveness.addLabel("smutne",0.16, 0.21, 0.29, 0.35, Song::getLiveness);
-        liveness.addLabel("pogodne",0.34, 0.46, 0.58, 0.72, Song::getLiveness);
-        liveness.addLabel("wesole",0.71, 0.79, 0.88, 0.99, Song::getLiveness);
+        liveness.addLabel("smutne",0, 21, 29, 35, Song::getLiveness);
+        liveness.addLabel("pogodne",34, 46, 58, 72, Song::getLiveness);
+        liveness.addLabel("wesole",71, 79, 88, 99, Song::getLiveness);
 
 
         tempo.addLabel("słabe",0, 37, 43, 47, Song::getTempo);
         tempo.addLabel("średnie",46, 53, 80, 99, Song::getTempo);
         tempo.addLabel("szybkie",98, 120, 140, 170, Song::getTempo);
-        tempo.addLabel("bardzo szybkie",169, 200, 230, 270, Song::getTempo);
+        tempo.addLabel("bardzo szybkie",169, 180, 200, 220, Song::getTempo);
 
 
         absoluteQuantifiers.add(qf.createAbsoluteQuantifierTrapezoidal("Mniej niż 500",0,0,99,499));
