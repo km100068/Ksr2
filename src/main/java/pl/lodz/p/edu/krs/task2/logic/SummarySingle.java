@@ -11,9 +11,6 @@ public abstract class SummarySingle extends Summary {
     }
 
     @Override
-    public abstract double T1();
-
-    @Override
     public double T2() {
         return 1 - Math.pow(
                 s.getLabels()
@@ -39,24 +36,27 @@ public abstract class SummarySingle extends Summary {
                 .mapToDouble(Double::doubleValue).reduce(1, (a, b) -> a*b) - T3();
     }
 
+    @Override
     public double T5() {
         return 2 * Math.pow(0.5, s.getLabels().size());
     }
 
+    @Override
     public double T6() {
         double res = q.support();
 
-        if (q instanceof QuantifierRelative) {
+        if (q instanceof QuantifierAbsolute) {
             res /= universe.size();
         }
 
         return 1 - res;
     }
 
+    @Override
     public double T7() {
-        double res = q.support();
+        double res = q.cardinality();
 
-        if (q instanceof QuantifierRelative) {
+        if (q instanceof QuantifierAbsolute) {
             res /= universe.size();
         }
 
