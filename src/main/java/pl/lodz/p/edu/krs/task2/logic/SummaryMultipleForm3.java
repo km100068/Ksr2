@@ -7,8 +7,8 @@ import java.util.List;
 public class SummaryMultipleForm3 extends SummaryMultiple {
     private final Label w;
 
-    public SummaryMultipleForm3(List<Song> universe, List<Song> set1, List<Song> set2, String set1Name, String set2Name, Quantifier q, Label w, Label s) {
-        super(universe, set1, set2, set1Name, set2Name, q, s);
+    public SummaryMultipleForm3(List<Song> set1, List<Song> set2, String set1Name, String set2Name, Quantifier q, Label w, Label s) {
+        super(set1, set2, set1Name, set2Name, q, s);
 
         this.w = w;
     }
@@ -18,27 +18,6 @@ public class SummaryMultipleForm3 extends SummaryMultiple {
         double up = s.getFuzzySet().mupliply(w.getFuzzySet()).cardinality(set1) / set1.size();
 
         return up / (up + s.getFuzzySet().cardinality(set2) / set2.size());
-    }
-
-    @Override
-    public double T3() {
-        return s.getFuzzySet().mupliply(w.getFuzzySet()).support(universe).stream().mapToDouble(Double::doubleValue).sum() /
-                w.getFuzzySet().support(universe).stream().mapToDouble(Double::doubleValue).sum();
-    }
-
-    @Override
-    public double T9() {
-        return 1 - 1.0*w.getFuzzySet().support(universe).size() / universe.size();
-    }
-
-    @Override
-    public double T10() {
-        return 1 - w.getFuzzySet().cardinality(universe) / universe.size();
-    }
-
-    @Override
-    public double T11() {
-        return 2 * Math.pow(0.5, w.getLabels().size());
     }
 
     @Override

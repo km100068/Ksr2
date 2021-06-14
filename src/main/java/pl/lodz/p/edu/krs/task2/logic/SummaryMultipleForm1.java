@@ -6,17 +6,19 @@ import java.util.List;
 
 public class SummaryMultipleForm1 extends  SummaryMultiple {
 
-    public SummaryMultipleForm1(List<Song> universe,
-                                List<Song> set1, List<Song> set2,
+    public SummaryMultipleForm1(List<Song> set1, List<Song> set2,
                                 String set1Name, String set2Name,
                                 Quantifier q, Label s) {
-        super(universe, set1, set2, set1Name, set2Name, q, s);
+        super(set1, set2, set1Name, set2Name, q, s);
     }
 
     @Override
     public double T1() {
+        double up = s.getFuzzySet().cardinality(set1) / set1.size();
+        double down = up + s.getFuzzySet().cardinality(set2) / set2.size();
+        double res = up / down;
         return q.getFunction()
-                .membership((s.getFuzzySet().cardinality(set1) / set1.size()) / (s.getFuzzySet().cardinality(set1) / set1.size() + s.getFuzzySet().cardinality(set2) / set2.size()));
+                .membership(res);
     }
 
     @Override

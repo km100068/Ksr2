@@ -4,6 +4,7 @@ import com.opencsv.exceptions.CsvException;
 
 import java.io.IOException;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class SqlDatabase {
     static String user="";
     static String password="";
 
-    public static void UpdateDatabase() throws IOException, CsvException {
+    public static void UpdateDatabase() throws IOException, CsvException, ParseException {
 
         Connection connection;
         List<Song> songs = getSongList();
@@ -54,7 +55,7 @@ public class SqlDatabase {
         }
 
     }
-    public static void UpdateFirstSet() throws IOException, CsvException {
+    public static void UpdateFirstSet() throws IOException, CsvException, ParseException {
 
         List<Song> songs = getSongList();
         Connection connection;
@@ -95,7 +96,7 @@ public class SqlDatabase {
         }
 
     }
-    public static void UpdateSecondSet() throws IOException, CsvException {
+    public static void UpdateSecondSet() throws IOException, CsvException, ParseException {
 
         Connection connection;
         List<Song> songs = getSongList();

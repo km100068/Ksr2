@@ -3,7 +3,7 @@ package pl.lodz.p.edu.krs.task2.view;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
+import static pl.lodz.p.edu.krs.task2.model.SqlDatabase.*;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
@@ -27,6 +27,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    private static final String set1Name = "piosenek A";
+    private static final String set2Name = "piosenek B";
+
     private static final String AND = "i";
     private static final String OR = "czy";
     private static final String NOT = "nie";
@@ -49,7 +52,9 @@ public class Controller implements Initializable {
     private final LinguisticVariable tempo = new LinguisticVariable("tempo");
     private final LinguisticVariable multiple = new LinguisticVariable("złożone");
 
-    private final List<Song> songs = new ArrayList<>();
+    private final List<Song> universe = new ArrayList<>();
+    private final List<Song> firstSet = new ArrayList<>();
+    private final List<Song> secondSet = new ArrayList<>();
 
 
     @FXML private ChoiceBox<String> conjuctionSelect;
@@ -159,17 +164,9 @@ public class Controller implements Initializable {
 
         summaryText.setWrapText(true);
 
-        try {
-            songs.addAll(CsvReader.getSongList());
-
-            for (Song song: songs) {
-                System.out.println(song);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
+        universe.addAll(getSongs());
+        firstSet.addAll(getFirstSet());
+        secondSet.addAll(getSecondSet());
     }
 
     public void onQualifierAttrClick(MouseEvent event) {
@@ -304,34 +301,34 @@ public class Controller implements Initializable {
         duration.addLabel("długie", 49000, 120000, 200000, 410000, Song::getDuration_ms);
         duration.addLabel("bardzo długie", 400000, 2200000, 2700000, 3010000, Song::getDuration_ms);
 
-        danceability.addLabel("mało taneczne", 0, 0.10, 0.18, 0.30, Song::getDanceability);
-        danceability.addLabel("średnio taneczne", 0.29, 0.34, 0.44, 0.62, Song::getDanceability);
-        danceability.addLabel("bardzo taneczne", 0.60, 0.70, 0.80, 0.96, Song::getDanceability);
+        danceability.addLabel("mało taneczne", 0, 10, 18, 30, Song::getDanceability);
+        danceability.addLabel("średnio taneczne", 29, 34, 44, 62, Song::getDanceability);
+        danceability.addLabel("bardzo taneczne", 60, 70, 80, 96, Song::getDanceability);
 
-        energy.addLabel("mało energiczne",0.13, 0.15, 0.19, 0.35, Song::getEnergy);
-        energy.addLabel("średnio energiczne",0.33, 0.46, 0.58, 0.66, Song::getEnergy);
-        energy.addLabel("bardzo energiczne",0.65, 0.79, 0.88, 1, Song::getEnergy);
+        energy.addLabel("mało energiczne",13, 15, 19, 35, Song::getEnergy);
+        energy.addLabel("średnio energiczne",33, 46, 58, 66, Song::getEnergy);
+        energy.addLabel("bardzo energiczne",65, 79, 88, 100, Song::getEnergy);
 
         loudness.addLabel("ciche",0, 5, 10, 15, Song::getLoudness);
         loudness.addLabel("przeciętnie głośne",14, 18, 22, 26, Song::getLoudness);
         loudness.addLabel("głośne",25, 31, 37, 43, Song::getLoudness);
         loudness.addLabel("bardzo głośne",42, 49, 55, 64, Song::getLoudness);
 
-        speechiness.addLabel("mało wokalne",0, 0.15, 0.27, 0.37, Song::getSpeechiness);
-        speechiness.addLabel("średnio wokalne",0.36, 0.46, 0.58, 0.66, Song::getSpeechiness);
-        speechiness.addLabel("bardzo wokalne",0.65, 0.79, 0.88, 0.97, Song::getSpeechiness);
+        speechiness.addLabel("mało wokalne",0, 15, 27, 37, Song::getSpeechiness);
+        speechiness.addLabel("średnio wokalne",36, 46, 58, 66, Song::getSpeechiness);
+        speechiness.addLabel("bardzo wokalne",65, 79, 88, 97, Song::getSpeechiness);
 
-        acousticness.addLabel("mało akustyczne",0.12, 0.25, 0.29, 0.35, Song::getAcousticness);
-        acousticness.addLabel("średnio akustyczne",0.33, 0.46, 0.58, 0.69, Song::getAcousticness);
-        acousticness.addLabel("bardzo akustyczne",0.68, 0.79, 0.88, 1, Song::getAcousticness);
+        acousticness.addLabel("mało akustyczne",12, 25, 29, 35, Song::getAcousticness);
+        acousticness.addLabel("średnio akustyczne",33, 46, 58, 69, Song::getAcousticness);
+        acousticness.addLabel("bardzo akustyczne",68, 79, 88, 1, Song::getAcousticness);
 
-        instrumentalness.addLabel("mało instrumentalne", 0.14, 0.21, 0.27, 0.35, Song::getInstrumentalness);
-        instrumentalness.addLabel("średnio instrumentalne", 0.33, 0.46, 0.58, 0.69, Song::getInstrumentalness);
-        instrumentalness.addLabel("bardzo instrumentalne", 0.67, 0.79, 0.88, 0.98, Song::getInstrumentalness);
+        instrumentalness.addLabel("mało instrumentalne", 14, 21, 27, 35, Song::getInstrumentalness);
+        instrumentalness.addLabel("średnio instrumentalne", 33, 46, 58, 69, Song::getInstrumentalness);
+        instrumentalness.addLabel("bardzo instrumentalne", 67, 79, 88, 98, Song::getInstrumentalness);
 
-        liveness.addLabel("smutne",0, 0.21, 0.29, 0.35, Song::getLiveness);
-        liveness.addLabel("pogodne",0.34, 0.46, 0.58, 0.72, Song::getLiveness);
-        liveness.addLabel("wesole",0.71, 0.79, 0.88, 0.99, Song::getLiveness);
+        liveness.addLabel("smutne",0, 21, 29, 35, Song::getLiveness);
+        liveness.addLabel("pogodne",34, 46, 58, 72, Song::getLiveness);
+        liveness.addLabel("wesole",71, 79, 88, 99, Song::getLiveness);
 
 
         tempo.addLabel("słabe",0, 37, 43, 47, Song::getTempo);
@@ -436,43 +433,114 @@ public class Controller implements Initializable {
     public void getForm1(MouseEvent event) {
         Summary summary = null;
 
-        if (multiSummaryOption.isSelected()) {
-            // TODO
-        } else {
-            Quantifier quantifier = absQuantifierList.getSelectionModel().getSelectedItem();
-            Label summarizer = summarizerList.getSelectionModel().getSelectedItem();
+        Quantifier quantifier = absQuantifierList.getSelectionModel().getSelectedItem();
+        Label summarizer = summarizerList.getSelectionModel().getSelectedItem();
 
-            if (quantifier == null) {
-                quantifier = relQuantifierList.getSelectionModel().getSelectedItem();
-            }
-
-            summary = new SummarySingleForm1(songs, quantifier, summarizer);
+        if (quantifier == null) {
+            quantifier = relQuantifierList.getSelectionModel().getSelectedItem();
         }
 
-        assert summary != null;
-        calculateMeasures(summary);
+        if (multiSummaryOption.isSelected()) {
+            List<Song> set1 = firstSet, set2 = secondSet;
+            String name1 = set1Name, name2 = set2Name;
+
+            if (inverseSummaryOption.isSelected()) {
+                set1 = secondSet;
+                set2 = firstSet;
+                name1 = set2Name;
+                name2 = set1Name;
+            }
+
+            summary = new SummaryMultipleForm1(set1, set2, name1, name2, quantifier, summarizer);
+
+            emptyTnTexts();
+
+
+            summaryText.setText(summary.toString());
+            tText.setText(String.valueOf(summary.T1()));
+
+        } else {
+
+            summary = new SummarySingleForm1(universe, quantifier, summarizer);
+            calculateMeasures(summary);
+        }
+
     }
 
     public void getForm2(MouseEvent event) {
         Summary summary = null;
 
-        if (multiSummaryOption.isSelected()) {
-            // TODO
-        } else {
-            Quantifier quantifier = absQuantifierList.getSelectionModel().getSelectedItem();
-            Label summarizer = summarizerList.getSelectionModel().getSelectedItem();
-            Label qualifier = qualifierList.getSelectionModel().getSelectedItem();
+        QuantifierRelative quantifier = relQuantifierList.getSelectionModel().getSelectedItem();
+        Label summarizer = summarizerList.getSelectionModel().getSelectedItem();
+        Label qualifier = qualifierList.getSelectionModel().getSelectedItem();
 
-            if (quantifier == null) {
-                quantifier = relQuantifierList.getSelectionModel().getSelectedItem();
+        if (multiSummaryOption.isSelected()) {
+            List<Song> set1 = firstSet, set2 = secondSet;
+            String name1 = set1Name, name2 = set2Name;
+
+            if (inverseSummaryOption.isSelected()) {
+                set1 = secondSet;
+                set2 = firstSet;
+                name1 = set2Name;
+                name2 = set1Name;
             }
 
-            assert quantifier instanceof QuantifierRelative;
-            summary = new SummarySingleForm2(songs,(QuantifierRelative) quantifier, qualifier, summarizer);
+            summary = new SummaryMultipleForm2(set1, set2, name1, name2, quantifier, qualifier, summarizer);
+
+            emptyTnTexts();
+
+            summaryText.setText(summary.toString());
+            tText.setText(String.valueOf(summary.T1()));
+
+        } else {
+
+            summary = new SummarySingleForm2(universe,(QuantifierRelative) quantifier, qualifier, summarizer);
+            calculateMeasures(summary);
         }
 
-        assert summary != null;
-        calculateMeasures(summary);
+
+    }
+
+    public void getForm3(MouseEvent event) {
+        List<Song> set1 = firstSet, set2 = secondSet;
+        String name1 = set1Name, name2 = set2Name;
+
+        if (inverseSummaryOption.isSelected()) {
+            set1 = secondSet;
+            set2 = firstSet;
+            name1 = set2Name;
+            name2 = set1Name;
+        }
+
+        QuantifierRelative quantifier = relQuantifierList.getSelectionModel().getSelectedItem();
+        Label summarizer = summarizerList.getSelectionModel().getSelectedItem();
+        Label qualifier = qualifierList.getSelectionModel().getSelectedItem();
+
+        Summary summary = new SummaryMultipleForm3(set1, set2, name1, name2, quantifier, qualifier, summarizer);
+
+        emptyTnTexts();
+        summaryText.setText(summary.toString());
+        tText.setText(String.valueOf(summary.T1()));
+    }
+
+    public void getForm4(MouseEvent event) {
+        List<Song> set1 = firstSet, set2 = secondSet;
+        String name1 = set1Name, name2 = set2Name;
+
+        if (inverseSummaryOption.isSelected()) {
+            set1 = secondSet;
+            set2 = firstSet;
+            name1 = set2Name;
+            name2 = set1Name;
+        }
+
+        Label summarizer = summarizerList.getSelectionModel().getSelectedItem();
+
+        Summary summary = new SummaryMultipleForm4(set1, set2, name1, name2, summarizer);
+
+        emptyTnTexts();
+        summaryText.setText(summary.toString());
+        tText.setText(String.valueOf(summary.T1()));
     }
 
     private void calculateMeasures(Summary summary) {
@@ -517,5 +585,19 @@ public class Controller implements Initializable {
         };
 
         tText.setText(String.format("%.3f", Arrays.stream(t).sum()));
+    }
+
+    private void emptyTnTexts() {
+        t1Text.setText("0");
+        t2Text.setText("0");
+        t3Text.setText("0");
+        t4Text.setText("0");
+        t5Text.setText("0");
+        t6Text.setText("0");
+        t7Text.setText("0");
+        t8Text.setText("0");
+        t9Text.setText("0");
+        t10Text.setText("0");
+        t11Text.setText("0");
     }
 }

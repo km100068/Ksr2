@@ -6,11 +6,12 @@ import pl.lodz.p.edu.krs.task2.model.CsvReader;
 import pl.lodz.p.edu.krs.task2.model.Song;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException, CsvException {
+    public static void main(String[] args) throws IOException, CsvException, ParseException {
         List<Song> songs = CsvReader.getSongList();
 
         List<QuantifierAbsolute> absoluteQuantifiers = new ArrayList<>();

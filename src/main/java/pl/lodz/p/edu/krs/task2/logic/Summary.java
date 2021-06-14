@@ -8,7 +8,6 @@ import java.util.List;
 @AllArgsConstructor
 public abstract class Summary {
     protected static final String subject = "piosenek";
-    protected final List<Song> universe;
     protected final Quantifier q;
     protected final Label s;
 

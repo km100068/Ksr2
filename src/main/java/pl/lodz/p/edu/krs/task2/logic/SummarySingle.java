@@ -5,9 +5,11 @@ import pl.lodz.p.edu.krs.task2.model.Song;
 import java.util.List;
 
 public abstract class SummarySingle extends Summary {
+    protected final List<Song> universe;
 
     public SummarySingle(List<Song> universe, Quantifier q, Label s) {
-        super(universe, q, s);
+        super(q, s);
+        this.universe = universe;
     }
 
     @Override
