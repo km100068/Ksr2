@@ -27,8 +27,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    private static final String set1Name = "piosenek A";
-    private static final String set2Name = "piosenek B";
+    private static final String set1Name = "piosenek bardzo starych";
+    private static final String set2Name = "piosenek przedwojennych";
 
     private static final String AND = "i";
     private static final String OR = "czy";
@@ -301,34 +301,34 @@ public class Controller implements Initializable {
         duration.addLabel("długie", 49000, 120000, 200000, 410000, Song::getDuration_ms);
         duration.addLabel("bardzo długie", 400000, 2200000, 2700000, 3010000, Song::getDuration_ms);
 
-        danceability.addLabel("mało taneczne", 0, 10, 18, 30, Song::getDanceability);
-        danceability.addLabel("średnio taneczne", 29, 34, 44, 62, Song::getDanceability);
-        danceability.addLabel("bardzo taneczne", 60, 70, 80, 96, Song::getDanceability);
+        danceability.addLabel("mało taneczne", 0, 0.10, 0.18, 0.30, Song::getDanceability);
+        danceability.addLabel("średnio taneczne", 0.29, 0.34, 0.44, 0.62, Song::getDanceability);
+        danceability.addLabel("bardzo taneczne", 0.60, 0.70, 0.80, 1, Song::getDanceability);
 
-        energy.addLabel("mało energiczne",13, 15, 19, 35, Song::getEnergy);
-        energy.addLabel("średnio energiczne",33, 46, 58, 66, Song::getEnergy);
-        energy.addLabel("bardzo energiczne",65, 79, 88, 100, Song::getEnergy);
+        energy.addLabel("mało energiczne",0.13, 0.15, 0.19, 0.35, Song::getEnergy);
+        energy.addLabel("średnio energiczne",0.33, 0.46, 0.58, 0.66, Song::getEnergy);
+        energy.addLabel("bardzo energiczne",0.65, 0.79, 0.88, 1, Song::getEnergy);
 
         loudness.addLabel("ciche",0, 5, 10, 15, Song::getLoudness);
         loudness.addLabel("przeciętnie głośne",14, 18, 22, 26, Song::getLoudness);
         loudness.addLabel("głośne",25, 31, 37, 43, Song::getLoudness);
         loudness.addLabel("bardzo głośne",42, 49, 55, 64, Song::getLoudness);
 
-        speechiness.addLabel("mało wokalne",0, 15, 27, 37, Song::getSpeechiness);
-        speechiness.addLabel("średnio wokalne",36, 46, 58, 66, Song::getSpeechiness);
-        speechiness.addLabel("bardzo wokalne",65, 79, 88, 97, Song::getSpeechiness);
+        speechiness.addLabel("mało wokalne",0, 0.15, 0.27, 0.37, Song::getSpeechiness);
+        speechiness.addLabel("średnio wokalne",0.36, 0.46, 0.58, 0.66, Song::getSpeechiness);
+        speechiness.addLabel("bardzo wokalne",0.65, 0.79, 0.88, 0.97, Song::getSpeechiness);
 
-        acousticness.addLabel("mało akustyczne",12, 25, 29, 35, Song::getAcousticness);
-        acousticness.addLabel("średnio akustyczne",33, 46, 58, 69, Song::getAcousticness);
-        acousticness.addLabel("bardzo akustyczne",68, 79, 88, 1, Song::getAcousticness);
+        acousticness.addLabel("mało akustyczne",0.12, 0.25, 0.29, 0.35, Song::getAcousticness);
+        acousticness.addLabel("średnio akustyczne",0.33, 0.46, 0.58, 0.69, Song::getAcousticness);
+        acousticness.addLabel("bardzo akustyczne",0.68, 0.79, 0.88, 1, Song::getAcousticness);
 
-        instrumentalness.addLabel("mało instrumentalne", 14, 21, 27, 35, Song::getInstrumentalness);
-        instrumentalness.addLabel("średnio instrumentalne", 33, 46, 58, 69, Song::getInstrumentalness);
-        instrumentalness.addLabel("bardzo instrumentalne", 67, 79, 88, 98, Song::getInstrumentalness);
+        instrumentalness.addLabel("mało instrumentalne", 0.14, 0.21, 0.27, 0.35, Song::getInstrumentalness);
+        instrumentalness.addLabel("średnio instrumentalne", 0.33, 0.46, 0.58, 0.69, Song::getInstrumentalness);
+        instrumentalness.addLabel("bardzo instrumentalne", 0.67, 0.79, 0.88, 0.98, Song::getInstrumentalness);
 
-        liveness.addLabel("smutne",0, 21, 29, 35, Song::getLiveness);
-        liveness.addLabel("pogodne",34, 46, 58, 72, Song::getLiveness);
-        liveness.addLabel("wesole",71, 79, 88, 99, Song::getLiveness);
+        liveness.addLabel("smutne",0, 0.21, 0.29, 0.35, Song::getLiveness);
+        liveness.addLabel("pogodne",0.34, 0.46, 0.58, 0.72, Song::getLiveness);
+        liveness.addLabel("wesole",0.71, 0.79, 0.88, 0.99, Song::getLiveness);
 
 
         tempo.addLabel("słabe",0, 37, 43, 47, Song::getTempo);
@@ -457,7 +457,7 @@ public class Controller implements Initializable {
 
 
             summaryText.setText(summary.toString());
-            tText.setText(String.valueOf(summary.T1()));
+            tText.setText(String.valueOf(!Double.isNaN(summary.T1()) ? summary.T1() : 0));
 
         } else {
 
@@ -490,7 +490,7 @@ public class Controller implements Initializable {
             emptyTnTexts();
 
             summaryText.setText(summary.toString());
-            tText.setText(String.valueOf(summary.T1()));
+            tText.setText(String.valueOf(!Double.isNaN(summary.T1()) ? summary.T1() : 0));
 
         } else {
 
@@ -520,7 +520,7 @@ public class Controller implements Initializable {
 
         emptyTnTexts();
         summaryText.setText(summary.toString());
-        tText.setText(String.valueOf(summary.T1()));
+        tText.setText(String.valueOf(!Double.isNaN(summary.T1()) ? summary.T1() : 0));
     }
 
     public void getForm4(MouseEvent event) {
@@ -540,23 +540,23 @@ public class Controller implements Initializable {
 
         emptyTnTexts();
         summaryText.setText(summary.toString());
-        tText.setText(String.valueOf(summary.T1()));
+        tText.setText(String.valueOf(!Double.isNaN(summary.T1()) ? summary.T1() : 0));
     }
 
     private void calculateMeasures(Summary summary) {
         summaryText.setText(summary.toString());
 
-        double T1 = summary.T1();
-        double T2 = summary.T2();
-        double T3 = summary.T3();
-        double T4 = summary.T4();
-        double T5 = summary.T5();
-        double T6 = summary.T6();
-        double T7 = summary.T7();
-        double T8 = summary.T8();
-        double T9 = summary.T9();
-        double T10 = summary.T10();
-        double T11 = summary.T11();
+        double T1 = !Double.isNaN(summary.T1()) ? summary.T1() : 0;
+        double T2 = !Double.isNaN(summary.T2()) ? summary.T2() : 0;
+        double T3 = !Double.isNaN(summary.T3()) ? summary.T3() : 0;
+        double T4 = !Double.isNaN(summary.T4()) ? summary.T4() : 0;
+        double T5 = !Double.isNaN(summary.T5()) ? summary.T5() : 0;
+        double T6 = !Double.isNaN(summary.T6()) ? summary.T6() : 0;
+        double T7 = !Double.isNaN(summary.T7()) ? summary.T7() : 0;
+        double T8 = !Double.isNaN(summary.T8()) ? summary.T8() : 0;
+        double T9 = !Double.isNaN(summary.T9()) ? summary.T9() : 0;
+        double T10 = !Double.isNaN(summary.T10()) ? summary.T10() : 0;
+        double T11 = !Double.isNaN(summary.T11()) ? summary.T11() : 0;
 
         t1Text.setText(String.format("%.3f", T1));
         t2Text.setText(String.format("%.3f", T2));
